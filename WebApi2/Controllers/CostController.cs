@@ -22,7 +22,7 @@ namespace WebApi.Controllers
             this.reclameBlockService = reclameBlockService;
         }
 
-        [HttpGet]
+        [HttpPost]
         public decimal GetCost(string sId)
         {
             try

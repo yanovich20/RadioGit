@@ -31,6 +31,7 @@ namespace Core.Services.Impl
             var countPeriods = 1;
             for (int i = 0; i < numOfReleases;)
             {
+                DateTime currentDate = DateTime.Now;
                 if (i == 0)
                 {
                     foreach (Release rel in rb.Releases)
@@ -40,7 +41,7 @@ namespace Core.Services.Impl
                         Release autoRelease = new Release
                         {
                             Cost = rel.Cost,
-                            Date = DateTime.Now,
+                            Date = currentDate,
                             Duration = rel.Duration,
                             LeadingId = rel.LeadingId,
                             Leading = rel.Leading,
@@ -51,6 +52,7 @@ namespace Core.Services.Impl
                         if (i == 0)
                             autoRelease.State = State.OnAir;
                         result.Add(autoRelease);
+                        currentDate = currentDate + rel.Duration;
                         i++;
                     }
                 }
@@ -70,19 +72,27 @@ namespace Core.Services.Impl
                             ReclameBlock = rel.ReclameBlock,
                             State = State.Planned
                         };
+
+                        var date = currentDate;
+
                         switch (rb.Period)
                         {
                             case Period.Hour:
-                                autoRelease.Date = DateTime.Now.AddHours(countPeriods);
+                                date = date.AddHours(countPeriods);
+                                //autoRelease.Date = DateTime.Now.AddHours(countPeriods);
                                 break;
                             case Period.Day:
-                                autoRelease.Date = DateTime.Now.AddDays(countPeriods);
+                                date = currentDate.AddDays(countPeriods);
+                                //autoRelease.Date = DateTime.Now.AddDays(countPeriods);
                                 break;
                             case Period.Week:
-                                autoRelease.Date = DateTime.Now.AddDays(countPeriods * 7);
+                                date = currentDate.AddDays(countPeriods * 7);
+                                //autoRelease.Date = DateTime.Now.AddDays(countPeriods * 7);
                                 break;
                         }
+                        autoRelease.Date = date;
                         result.Add(autoRelease);
+                        currentDate = currentDate + rel.Duration;
                         i++;
                     }
                     countPeriods++;
