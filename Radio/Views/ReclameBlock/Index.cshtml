@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Core.ReclameBlock>
+@using Core.Helpers;
+@using System.ComponentModel.DataAnnotations;
+
+@{
+    ViewData["Title"] = "Список рекламных блоков";
+}
+
+<h2>Список рекламных блоков</h2>
+
+<p>
+    <a asp-action="Create">Создать новый</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Period)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Responsible)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Modified)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Deleted)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @* @Html.DisplayFor(modelItem => item.Period.GetAttribute<DisplayAttribute>())*@
+                @{var en = item.Period.GetAttribute<DisplayAttribute>();}
+                @en.Name
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Responsible.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modified)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deleted)
+            </td>*@
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a> |
+                <a asp-action="Index" asp-controller="Release" asp-route-rbId="@item.Id">Выпуски</a> |
+                <a asp-action="GetAutoReleases" asp-controller="Release" asp-route-rbId="@item.Id">Автовыпуски</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

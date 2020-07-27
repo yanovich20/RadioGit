@@ -26,13 +26,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Radio</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Домашняя</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="ReclameBlock" asp-action="Index">Рекламные блоки</a></li>
+                    <li><a asp-area="" asp-controller="Employer" asp-action="Index">Сотрудники</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">О нас</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Контакты</a></li>
                 </ul>
             </div>
         </div>
@@ -41,6 +42,7 @@
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
+        <partial name="Message"/>
         @RenderBody()
         <hr />
         <footer>

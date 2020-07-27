@@ -1,0 +1,11 @@
+﻿
+@if (TempData["status"] != null && TempData["text"] != null
+ && new string[] { "success", "info", "warning", "danger" }.Contains((string)TempData["status"])
+ && !string.IsNullOrWhiteSpace((string)TempData["text"]))
+{
+    @*<div class="container sk-message">
+        </div>*@
+    <div class="m-0 alert alert-@TempData["status"].ToString()">
+        @TempData["text"].ToString()
+    </div>
+}

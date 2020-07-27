@@ -9,6 +9,13 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+
+using Core;
+using Core.Repositories;
+using Core.Repositories.Impl;
+using Core.Services;
+using Core.Services.Impl;
 
 namespace Radio
 {
@@ -31,6 +38,19 @@ namespace Radio
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<RadioContext>(options => options.UseSqlServer(connection));
+
+            services.AddScoped<IEmployerRepository, EmployerRepository>();
+            services.AddScoped<IReleaseRepository, ReleaseRepository>();
+            services.AddScoped<IReclameBlockRepository, ReclameBlockRepository>();
+
+            services.AddScoped<IEmployerService, EmployerService>();
+            services.AddScoped<IReleaseService, ReleaseService>();
+            services.AddScoped<IReclameBlockService, ReclameBlockService>();
+
+
+            services.Configure<Setting>(Configuration.GetSection("Setting"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
